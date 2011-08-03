@@ -1,24 +1,35 @@
 require ("Screen")
 
-splashScreen = Screen:new("splashScreen")
+SplashScreen = Screen:new("splashScreen")
 
-function splashScreen:init ()
+local time = 0
+local splashImage
+
+function SplashScreen:init ()
 	--print("init splash screen")
-	display.newImage("splashScreen.png")
+	splashImage = display.newImage("splashScreen.png")
+	time = system.getTimer()
+	print(time)
 end
 
-function splashScreen:updateInput (event)
+function SplashScreen:updateInput (event)
 	--print("update input splash screen")
 end
 
-function splashScreen:update ()
+function SplashScreen:update ()
 	--print("update splash screen")
+	local splashDelay = system.getTimer() - time
+	if splashDelay > 3000 then --3 second splash screen
+		print("switch state")
+		self.state = "menuScreen"
+	end
 end
 
-function splashScreen:draw ()
+function SplashScreen:draw ()
 	--print("draw splash screen")
 end
 
-function splashScreen:exit ()
+function SplashScreen:exit ()
 	--print("exit splash screen")
+	splashImage.parent:remove (splashImage)
 end

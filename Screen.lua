@@ -1,7 +1,7 @@
-Screen = {name = ""}
+Screen = {name = "", state = ""}
 
 function Screen:new (name)
-	inst = {name = name}
+	inst = {name = name, state = name}
 	setmetatable(inst, self)
 	self.__index = self
 	return inst
@@ -32,4 +32,14 @@ function Screen:getName ()
 		print("scene name is nil")
 	end
 	return self.name
+end
+
+-- This will be hold the state of the next screen to tansistion to.
+-- If state == name then we stay on the same screen.
+function Screen:getState ()
+	return self.state
+end
+
+function Screen:setState (state)
+	self.state = state
 end

@@ -1,11 +1,27 @@
 require("ScreenManager")
-require("splashScreen")
-require("gameScreen")
+require("SplashScreen")
+require("MenuScreen")
+require("GameScreen")
 
 display.setStatusBar( display.HiddenStatusBar )
- 
-sm = ScreenManager:new(gameScreen)
+
+ss = SplashScreen:new("splashScreen")
+ms = MenuScreen:new("menuScreen")
+gs = GameScreen:new("gameScreen")
+print("names")
+print(gs.name)
+print(ss.name)
+sm = ScreenManager:new()
+sm:addScreen(ss)
+sm:addScreen(ms)
+sm:addScreen(gs)
 sm:init()
+
+sm:setActiveScreen("splashScreen")
+print("active screen")
+print(sm.screens["splashScreen"].name)
+print(sm.screen.name)
+print(sm:getScreen().name)
 
 
 local function tap(event)
@@ -21,10 +37,10 @@ local function tap(event)
 	else
 		print("screen doesn't equal test values")
 	end
-	
+]]	
 	name = sm:getScreen():getName()
-	print("new screen name " .. name)
-]]
+	print("screen name " .. name)
+
 end
 
 
@@ -39,6 +55,8 @@ local function draw(event)
 	-- Seconds since app started = event.time/1000
 	--print("system " .. system.getTimer())
 	--print("event " .. event.time)
+	print("num objects " .. display.getCurrentStage().numChildren)
+	sm:update()
 	sm:draw()
 end
 
