@@ -8,9 +8,11 @@ display.setStatusBar( display.HiddenStatusBar )
 ss = SplashScreen:new("splashScreen")
 ms = MenuScreen:new("menuScreen")
 gs = GameScreen:new("gameScreen")
-print("names")
-print(gs.name)
+print("-- Screen Names --")
 print(ss.name)
+print(ms.name)
+print(gs.name)
+print()
 sm = ScreenManager:new()
 sm:addScreen(ss)
 sm:addScreen(ms)
@@ -18,26 +20,15 @@ sm:addScreen(gs)
 sm:init()
 
 sm:setActiveScreen("splashScreen")
-print("active screen")
+--[[print("active screen")
 print(sm.screens["splashScreen"].name)
 print(sm.screen.name)
 print(sm:getScreen().name)
-
+]]
 
 local function tap(event)
 	sm:updateInput(event)
 
-	--test switching scenes
---[[	s = sm:getScreen()
-	print("current screen " .. s:getName())
-	if s:getName() == "splashScreen" then
-		sm:setScreen(gameScreen)
-	elseif s:getName() == "gameScreen" then
-		sm:setScreen(splashScreen)
-	else
-		print("screen doesn't equal test values")
-	end
-]]	
 	name = sm:getScreen():getName()
 	print("screen name " .. name)
 
