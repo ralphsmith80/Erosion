@@ -26,11 +26,21 @@ print(sm.screen.name)
 print(sm:getScreen().name)
 ]]
 
+local function displayEvents()
+	print("content center x " .. display.contentCenterX)
+	print("content hight " .. display.contentHeight)
+	print("content scale x " .. display.contentScaleX)
+	print("screen origin x " .. display.screenOriginX)
+	print("viewable content height " .. display.viewableContentHeight)
+	print("viewable content width " .. display.viewableContentWidth)
+end
+
 local function tap(event)
 	sm:updateInput(event)
 
 	name = sm:getScreen():getName()
 	print("screen name " .. name)
+	displayEvents()
 
 end
 
@@ -46,7 +56,7 @@ local function draw(event)
 	-- Seconds since app started = event.time/1000
 	--print("system " .. system.getTimer())
 	--print("event " .. event.time)
-	print("num objects " .. display.getCurrentStage().numChildren)
+--	print("num objects " .. display.getCurrentStage().numChildren)
 	sm:update()
 	sm:draw()
 end
