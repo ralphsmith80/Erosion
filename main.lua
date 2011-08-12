@@ -1,69 +1,76 @@
-require("ScreenManager")
-require("SplashScreen")
-require("MenuScreen")
-require("GameScreen")
+require ("ScreenManager")
+require ("Util")
 
-display.setStatusBar( display.HiddenStatusBar )
 
-ss = SplashScreen:new("splashScreen")
-ms = MenuScreen:new("menuScreen")
-gs = GameScreen:new("gameScreen")
-print("-- Screen Names --")
-print(ss.name)
-print(ms.name)
-print(gs.name)
-print()
-sm = ScreenManager:new()
-sm:addScreen(ss)
-sm:addScreen(ms)
-sm:addScreen(gs)
-sm:init()
 
-sm:setActiveScreen("splashScreen")
---[[print("active screen")
-print(sm.screens["splashScreen"].name)
-print(sm.screen.name)
-print(sm:getScreen().name)
-]]
+-- Function Defines
 
-local function displayEvents()
-	print("content center x " .. display.contentCenterX)
-	print("content hight " .. display.contentHeight)
-	print("content scale x " .. display.contentScaleX)
-	print("screen origin x " .. display.screenOriginX)
-	print("viewable content height " .. display.viewableContentHeight)
-	print("viewable content width " .. display.viewableContentWidth)
-end
-
+-- Handle a Tap
 local function tap(event)
-	sm:updateInput(event)
+	ScreenManager.getInstance():updateInput(event)
 
-	name = sm:getScreen():getName()
-	print("screen name " .. name)
-	displayEvents()
-
+	Util.displayEvents("Tap")
 end
 
-
+-- Handle a Touch
 local function touch(event)
-	--print("touch time " .. event.time)
-	sm:updateInput(event)
+	ScreenManager.getInstance():updateInput(event)
+	
+	Util.displayEvents("Touch")
 end
 
 
---system.getTimer()
 local function draw(event)
 	-- Seconds since app started = event.time/1000
 	--print("system " .. system.getTimer())
 	--print("event " .. event.time)
 --	print("num objects " .. display.getCurrentStage().numChildren)
-	sm:update()
-	sm:draw()
+	
+	--sm:update()
+	--sm:draw()
+	ScreenManager.getInstance():update()
+	ScreenManager.getInstance():draw()
+end
+
+local function setupEventListeners()
+	Runtime:addEventListener("tap", tap);
+	Runtime:addEventListener("touch", touch);
+
+	--fires every frame interval
+	Runtime:addEventListener("enterFrame", draw);
+
 end
 
 
-Runtime:addEventListener("tap", tap);
-Runtime:addEventListener("touch", touch);
+local function createScreenManager()
+	sm = ScreenManager:new()
+	sm:init()
+	sm:setInstance(sm)
+end
 
---fires every frame interval
-Runtime:addEventListener("enterFrame", draw);
+
+local function runMain()
+	Util.printProgramIntro()
+	
+	Util.functionDebug(Util.mainDebug, "----- [Begin] runMain -----")
+	display.setStatusBar( display.HiddenStatusBar )
+
+	-- Make a ScreenManager
+	createScreenManager()
+	
+	-- Setup Screens
+	ScreenManager.getInstance().setupScreens()
+	
+	-- Setup Event Listeners
+	setupEventListeners()
+
+	Util.functionDebug(Util.mainDebug, "----- [End] runMain -----")
+end
+
+
+-- Execution
+
+runMain()
+
+
+

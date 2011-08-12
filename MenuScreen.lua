@@ -29,7 +29,10 @@ end
 
 function MenuScreen:init ()
 	--print("init menu screen")
-	background = display.newImage("menuBackground.png")
+	--background = display.newImage("menuBackground.png")
+	
+	background = display.newImage("erosion_title_image_02@2x.png", 40, 80)	
+	
 	--imageGroup:insert (splashImage)
 	playBtn = ui.newButton{
 		default = "redBtn.png",

@@ -1,6 +1,10 @@
 require ("Screen")
+require ("SplashScreen")
+require ("MenuScreen")
+require ("GameScreen")
+require ("Util")
 
-ScreenManager = {screen = nil, screens = {}}
+ScreenManager = {screen = nil, screens = {}, _sm = nil}
 
 function ScreenManager:new ()
 	inst = {screen = nil, screens = {}}
@@ -81,4 +85,49 @@ function ScreenManager:nextScreen ()
 	if self.screen.state ~= self.screen.name then
 		self:setActiveScreen (self.screen.state)
 	end
+end
+
+function ScreenManager:printScreenNames ()
+	print("     -- Screens --")
+	for k, v in pairs(screens) do 
+		print(string.format("     %s: %s", tostring(k), tostring(v)))
+	end
+end
+
+
+function ScreenManager.getInstance ()
+	if _sm ~= nil then
+		return _sm
+	else
+		return nil
+	end
+end
+
+function ScreenManager:setInstance(screenManager)
+	_sm = screenManager
+end
+
+function ScreenManager:setupScreens()
+	Util.functionDebug(Util.screenDebug, "----- [Begin] setupScreens -----")
+	
+	Util.functionDebug(true, "     Instantiating ScreenManager")	
+
+	-- Instantiate needed screens
+	ss = SplashScreen:new("splashScreen")
+	ms = MenuScreen:new("menuScreen")
+	gs = GameScreen:new("gameScreen")
+
+	_sm:addScreen(ss)
+	_sm:addScreen(ms)
+	_sm:addScreen(gs)
+	_sm:init()
+
+	if screenDebug then
+		_sm.printScreenNames()
+	end
+
+	-- Set Splash Screen as the first active screen
+	_sm:setActiveScreen("splashScreen")
+
+	Util.functionDebug(Util.screenDebug, "----- [End] setupScreens -----")
 end

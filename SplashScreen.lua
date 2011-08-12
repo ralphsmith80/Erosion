@@ -8,7 +8,10 @@ local displayTime = 3000 --3 second splash screen
 
 function SplashScreen:init ()
 	--print("init splash screen")
-	splashImage = display.newImage("splashScreen.png")
+	--splashImage = display.newImage("splashScreen.png")
+	
+	splashImage = display.newImage("erosion_title_image_02@2x.png", 40, 80)
+	
 	time = system.getTimer()
 	displayTime = displayTime + time
 end
