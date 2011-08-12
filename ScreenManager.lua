@@ -89,7 +89,7 @@ end
 
 function ScreenManager:printScreenNames ()
 	print("     -- Screens --")
-	for k, v in pairs(screens) do 
+	for k, v in pairs(self.screens) do 
 		print(string.format("     %s: %s", tostring(k), tostring(v)))
 	end
 end
@@ -122,8 +122,8 @@ function ScreenManager:setupScreens()
 	_sm:addScreen(gs)
 	_sm:init()
 
-	if screenDebug then
-		_sm.printScreenNames()
+	if Util.screenDebug then
+		_sm:printScreenNames()
 	end
 
 	-- Set Splash Screen as the first active screen
