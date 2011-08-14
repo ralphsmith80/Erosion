@@ -11,18 +11,24 @@ function new()
 	local background = display.newImage ("splashScreen.png")
 	localGroup:insert(background)
 	
-	local function update (event)
-		if event.phase == "ended" then
-			local circle = display.newCircle(event.x, event.y, 30)
-			--circle.alpha = 0.5
-			circle:setFillColor(255, 0, 0, 150)
-			localGroup:insert(circle)
-		end
+	local backBtnRelease = function( event )
+		print("menuScreen")
+		director:changeScene ("menuscreen")
 	end
-
-	background:addEventListener ("touch", update)
-	--> This adds the touch event to the background
-
+	
+	backBtn = ui.newButton{
+		default = "redBtn.png",
+		over = "pressedRedBtn.png",
+		onRelease = backBtnRelease,
+		text = "Menu",
+		id = "backBtn"
+		--emboss = true
+	}
+	
+	backBtn.x = display.contentWidth/2; backBtn.y = 320
+	
+	localGroup:insert(backBtn)
+	
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 	return localGroup

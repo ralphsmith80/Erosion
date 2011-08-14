@@ -1,43 +1,35 @@
-require ("Screen")
-local ui = require("ui")
+module(..., package.seeall)
 
-MenuScreen = Screen:new("menuScreen")
+function new()
+	local localGroup = display.newGroup()
+	--> This is how we start every single file or "screen" in our folder, except for main.lua
+	-- and director.lua
+	--> director.lua is NEVER modified, while only one line in main.lua changes, described in that file
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
+	local ui = require("ui")
+	local background = display.newImage("erosion_title_image_02.png", 40, 80)
+	local state
 
+	local playBtnRelease = function( event )
+		print("gameScreen")
+		director:changeScene ("GameScreen")
+	end
 
---local imageGroup = display.newGroup()
-local background
-local playBtn
-local howToBtn
-local highScoreBtn
-local state
+	local howToBtnRelease = function( event )
+		print("how to")
+		director:changeScene ("HowToScreen")
+	end
 
-local playBtnRelease = function( event )
-	state = "gameScreen"
-end
-
-local howToBtnRelease = function( event )
-	print("how to")
---	state = "howToScreen"
-end
-
-local highScoreBtnRelease = function( event )
-	print("high score")
---	state = "highScoreScreen"
-end
-
-
-function MenuScreen:init ()
-	--print("init menu screen")
-	--background = display.newImage("menuBackground.png")
+	local highScoreBtnRelease = function( event )
+		print("high score")
+		director:changeScene ("HighScoreScreen")
+	end	
 	
-	background = display.newImage("erosion_title_image_02@2x.png", 40, 80)	
-	
-	--imageGroup:insert (splashImage)
 	playBtn = ui.newButton{
 		default = "redBtn.png",
 		over = "pressedRedBtn.png",
-		--onPress = newGameBtnPress,
 		onRelease = playBtnRelease,
 		text = "Play Game",
 		id = "playBtn"
@@ -46,7 +38,6 @@ function MenuScreen:init ()
 	howToBtn = ui.newButton{
 		default = "redBtn.png",
 		over = "pressedRedBtn.png",
-		--onPress = newGameBtnPress,
 		onRelease = howToBtnRelease,
 		text = "How-To",
 		id = "howToBtn"
@@ -55,41 +46,26 @@ function MenuScreen:init ()
 	highScoreBtn = ui.newButton{
 		default = "redBtn.png",
 		over = "pressedRedBtn.png",
-		--onPress = newGameBtnPress,
 		onRelease = highScoreBtnRelease,
 		text = "High Scores",
 		id = "highScoreBtn"
 		--emboss = true
 	}
 
+--[[	print(display.viewableContentHeight)
+	print(display.contentHeight)
+	print(display.contentWidth)
+]]
 	playBtn.x = 240; playBtn.y = 220
 	howToBtn.x = 80; howToBtn.y = 300
 	highScoreBtn.x = 240; highScoreBtn.y = 380
-	state = self.state
+	
+	localGroup:insert(background)
+	localGroup:insert(playBtn)
+	localGroup:insert(howToBtn)
+	localGroup:insert(highScoreBtn)
+	
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+	return localGroup
 end
-
-function MenuScreen:updateInput (event)
-	--print("update input menu screen")
-	--print("event " .. event.name)
-	if event.name == "tap" then
-		--self.state = "gameScreen"
-	end
-end
-
-function MenuScreen:update ()
-	--print("update menu screen")
-	self.state = state
-end
-
-function MenuScreen:draw ()
-	--print("draw menu screen")
-end
-
-function MenuScreen:exit ()
-	--print("exit menu screen")
-	background.parent:remove( background )
-	playBtn.parent:remove( playBtn )
-	howToBtn.parent:remove( howToBtn )
-	highScoreBtn.parent:remove( highScoreBtn )
-end
-

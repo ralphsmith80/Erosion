@@ -1,38 +1,36 @@
-require ("Screen")
+module(..., package.seeall)
 
-SplashScreen = Screen:new("splashScreen")
+function new()
+	local localGroup = display.newGroup()
+	--> This is how we start every single file or "screen" in our folder, except for main.lua
+	-- and director.lua
+	--> director.lua is NEVER modified, while only one line in main.lua changes, described in that file
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
-local time = 0
-local splashImage
-local displayTime = 3000 --3 second splash screen
-
-function SplashScreen:init ()
-	--print("init splash screen")
-	--splashImage = display.newImage("splashScreen.png")
+	local time = system.getTimer()
+	local displayTime = 3000 --3 second splash screen
+	local background = display.newImage ("erosion_title_image_02.png", 40, 80)
+	localGroup:insert(background)
+	--> This sets the background
 	
-	splashImage = display.newImage("erosion_title_image_02@2x.png", 40, 80)
-	
-	time = system.getTimer()
+	--> make the splash screen run for the full displayTime
 	displayTime = displayTime + time
-end
 
-function SplashScreen:updateInput (event)
-	--print("update input splash screen")
-end
 
-function SplashScreen:update ()
-	--print("update splash screen")
-	local splashDelay = system.getTimer() - time
-	if splashDelay > displayTime then
-		self.state = "menuScreen"
+	local function update (event)
+		local splashDelay = system.getTimer() - time
+		if splashDelay > displayTime then
+			director:changeScene ("MenuScreen")
+			--> Remove runtime events so they do eat up cpu
+			Runtime:removeEventListener ("enterFrame", update)
+		end
 	end
-end
 
-function SplashScreen:draw ()
-	--print("draw splash screen")
-end
+	Runtime:addEventListener ("enterFrame", update)
+	--> This adds the function and listener to the timer runtime event
 
-function SplashScreen:exit ()
-	--print("exit splash screen")
-	splashImage.parent:remove (splashImage)
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+	return localGroup
 end
