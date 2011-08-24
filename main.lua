@@ -16,7 +16,7 @@ local function runMain()
 	mainGroup:insert(director.directorView)
 	
 	--> Change the scene, no effects
-	director:changeScene("SplashScreen")
+	director:changeScene("SplashScreen", "fade")
 
 	Util.functionDebug(Util.mainDebug, "----- [End] runMain -----")
 end

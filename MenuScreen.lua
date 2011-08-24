@@ -9,22 +9,22 @@ function new()
 ------------------------------------------------------------------------------
 
 	local ui = require("ui")
-	local background = display.newImage("erosion_title_image_02.png", 40, 80)
+	local background = display.newImage("erosion_title_image_02.png", 20, 40)
 	local state
 
 	local playBtnRelease = function( event )
 		print("gameScreen")
-		director:changeScene ("GameScreen")
+		director:changeScene ("GameScreen", "fade")
 	end
 
 	local howToBtnRelease = function( event )
 		print("how to")
-		director:changeScene ("HowToScreen")
+		director:changeScene ("HowToScreen", "fade")
 	end
 
 	local highScoreBtnRelease = function( event )
 		print("high score")
-		director:changeScene ("HighScoreScreen")
+		director:changeScene ("HighScoreScreen", "fade")
 	end	
 	
 	playBtn = ui.newButton{
