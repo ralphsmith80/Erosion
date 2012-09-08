@@ -28,7 +28,6 @@ function Util.displayEvents(eventType)
 	print("viewable content height: " .. display.viewableContentHeight)
 	print("viewable content width:  " .. display.viewableContentWidth)
 	print("#####################################")
-
 end
 
 function Util.printProgramIntro()
