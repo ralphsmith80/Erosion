@@ -37,3 +37,8 @@ function Util.printProgramIntro()
 	print ("Version: " .. gameVer)
 	print ("\n\n")
 end
+
+function Util.printObjectsOnScreen()
+	print("here")
+	print("num objects " .. display.getCurrentStage().numChildren)
+end
